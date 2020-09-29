@@ -154,8 +154,9 @@ int main(int argc, char *argv[]) {
     }
 
     out = output;                                               //assign output to the global array to store output chunks
-    terminationLength = malloc(sizeof(long) * n);
-    memset(terminationLength, 0, sizeof(long) * n);
+    
+    terminationLength = malloc(sizeof(long) * n);               //allocate memory to global array for output sizes
+    memset(terminationLength, 0, sizeof(long) * n);             //initialize the array with 0's
 
     //variable to store the character read from fgetc (in int format so it can be compared with EOF)
     int character;
