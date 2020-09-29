@@ -1,11 +1,13 @@
+//ParThread.c: This program divides the input files into many chunks and runs each chunk through a thread
+
 #include<stdio.h>          //for file and command line IO
 #include<stdlib.h>         //for exit() malloc() and atoi()
 #include<sys/time.h>       //used to time the program
 #include<pthread.h>        //for pthread functions
 #include<string.h>         //for memset()      
 
-char** out;
-long* terminationLength;
+char** out;                     //global array to store output data chunks
+long* terminationLength;        //global array to store output data sizes
 
 // Function to get integer length (in order to convert it to a string) 
 // along with the rest of the characters)
@@ -94,7 +96,7 @@ void *thread(void *data) {
     //compress the data and store in outputString, get output size from the compress function
     long outputSize = Compress(args->data, args->size, outputString);
     terminationLength[args->process_No] = outputSize;
-    //iterate through the output string and write every character to the pipe
+    //iterate through the output string and write every character to the allocated space in the global array 'out'
     for(int y = 0; y < outputSize; y++) {
         out[args->process_No][y] = outputString[y];
     }
@@ -127,13 +129,13 @@ int main(int argc, char *argv[]) {
     //file pointer to write file
     FILE* fOut = fopen(argv[2], "w");
 
-    //number of processes to fork (from user input)
+    //number of threads to create (from user input)
     int n = atoi(argv[3]);
 
     //create an array of strings to store the contents of the file
     //each element of the array is going to be used by one child process
     char* data[n];
-    char* output[n];
+    char* output[n];                    //create a placeholder array to assign to the global array
     //array to store the size of each chunk of input (this is created mostly for the last chunk which slightly differs in size)
     long sizes[n];
 
@@ -151,7 +153,7 @@ int main(int argc, char *argv[]) {
         output[i] = malloc(chunk_size);
     }
 
-    out = output;
+    out = output;                                               //assign output to the global array to store output chunks
     terminationLength = malloc(sizeof(long) * n);
     memset(terminationLength, 0, sizeof(long) * n);
 
@@ -177,18 +179,21 @@ int main(int argc, char *argv[]) {
     //close the read file
     fclose(fRead);
 
+    //load necessary data into a struct so it can be sent to the thread 
     struct dataStruct argumentData[n];
     for (int i = 0; i < n; i++) {
-        argumentData[i].chunk_size = chunk_size;
-        argumentData[i].data = data[i];
-        argumentData[i].process_No = i;
-        argumentData[i].size = sizes[i];
+        argumentData[i].chunk_size = chunk_size;    //size of data chunk
+        argumentData[i].data = data[i];             //data string
+        argumentData[i].process_No = i;             //number of process so the output data can be assigned to designated spot on the output array
+        argumentData[i].size = sizes[i];            //size of data string (might differ from originally calculated chunk size)
     }
     
+    //create threads
     pthread_t thread_id[n];
     for (int i = 0; i < n; i++) {
         pthread_create(&thread_id[i], NULL, &thread, (void *)&argumentData[i]);
     }
+    //join threads
     for (int i = 0; i < n; i++) {
         pthread_join(thread_id[i], NULL);
     }
