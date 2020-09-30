@@ -1,0 +1,129 @@
+CS 4440 Project 1
+
+Group Members:
+Tim Ellis
+Harshil Kotamreddy
+Lynne Tien
+
+
+Problem 1:    
+    MyCompress.c:
+    When make is run, the executable file created is MyCompress.
+
+    MyCompress is a program that compresses files comprised of 1's 0's and whitspaces by converting strings of 1's and 0's with length > 16 into +count+ and -count- respectively.
+    It takes 2 arguments. 
+        1) Input file path (file to be compressed)
+        2) Output file path (location where you want the output to be stored)
+    A sample command to run MyCompress:
+        ./MyCompress inputFile.txt outputFile.txt
+    On successful run, MyCompress will print 'File "inputFile.txt" compressed successfully to "outputFile.txt"' along with the time taken to execute the program in milliseconds.
+    MyCompress does not run if the input file path is invalid or if an incorrect number of arguments are specified. It will print a brief message under these conditions.
+
+Problem 2:
+    MyDecompress.c:
+    When make is run, the executable file created is MyDecompress.
+
+    MyCompress is a program that reverts the files created by MyCompress back to their original form. 
+    It takes 2 arguments. 
+        1) Input file path (file to be decompressed)
+        2) Output file path (location where you want the output to be stored)
+    A sample command to run MyDecompress:
+        ./MyDecompress inputFile.txt outputFile.txt
+    On successful run, MyDecompress will print 'File "inputFile.txt" decompressed successfully to "outputFile.txt"'.
+    MyDecompress does not run if the input file path is invalid or if an incorrect number of arguments are specified. It will print a brief message under these conditions.
+
+Problem 3:
+    ForkCompress.c:
+    When make is run, the executable file created is ForkCompress.
+
+    ForkCompress is a program that runs executes MyCompress in a forked child process.
+    It takes 2 arguments. 
+        1) Input file path (file to be compressed)
+        2) Output file path (location where you want the output to be stored)
+    A sample command to run ForkCompress:
+        ./ForkCompress inputFile.txt outputFile.txt
+    ForkCompress will run regardless of wrong arguments. It will print its own message along with MyCompress's sucess message when it has finished executing MyCompress. 
+    If invalid arguments are given, MyCompress's error messages will be displayed along with a successful run message for ForkCompress. 
+
+Problem 4:
+    PipeCompress.c:
+    When make is run, the executable file created is PipeCompress.
+
+    PipeCompress is a program that forks 2 processes in order to perform the same operations of MyCompress, one to read the input file and one to write to the output file. 
+    It takes 2 arguments. 
+        1) Input file path (file to be compressed)
+        2) Output file path (location where you want the output to be stored)
+    A sample command to run PipeCompress:
+        ./PipeCompress inputFile.txt outputFile.txt
+    On successful run, PipeCompress will print 'File "inputFile.txt" compressed successfully to "outputFile.txt"'.
+    PipeCompress does not run if the input file path is invalid or if an incorrect number of arguments are specified. It will print a brief message under these conditions.
+
+Problem 5:
+    ParFork.c:
+    When make is run, the executable file created is ParFork.
+
+    ParFork is a program that performs the same operation as MyCompress, but does so by dividing the input file into n chunks and processing each chunk in a forked process.
+    It takes 3 arguments.
+        1) Input file path (file to be compressed)
+        2) Output file path (location where you want output to be stored)
+        3) Number of processes to be forked
+        A sample command to run ParFork:
+            ./ParFork inputFile.txt outputFile.txt 10
+        In this case, ParFork would divide the input file into 10 chunks and fork 10 processes.
+    On successful run, ParFork will print 'File "inputFile.txt" compressed succesfully to "outputFile.txt"' along with the time taken to execute the program in milliseconds.
+    ParFork does not run if the input file path is invalid or if an incorrect number of arguments are specified. It will print a brief message under these conditions.
+
+Problem 6:
+    MiniShell.c:
+    When make is run, the executable file created is MiniShell.
+
+    MiniShell is a program that simulates a shell-like terminal that executes single word commands.
+    It does not require any arguments.
+    A sample command to run MiniShell:
+        ./MiniShell
+    On successful run, MiniShell will print "MiniShell>" waiting for user input.
+    To exit the program, type in "exit" and press enter.
+
+Problem 7:
+    MoreShell.c:
+    When make is run, the executable file created is MoreShell.
+
+    MoreShell is a program that improves on MiniShell, allowing for multi-word commands.
+    It does not require any arguments.
+    A sample command to run MoreShell:
+        ./MoreShell
+    On successful run, MiniShell will print "MoreShell>" waiting for user input.
+    To exit the program, type in "exit" and press enter.
+
+Problem 8:
+    DupShell.c:
+    When make is run, the executable file created is DupShell.
+
+    DupShell is a program that improves on MoreShell, allowing for multi-word commands along with the pipe operator | and a secondary command.
+    It does not require any arguments.
+    A sample command to run DupShell:
+        ./DupShell
+    On successful run, MiniShell will print "DupShell>" waiting for user input.
+    To exit the program, type in "exit" and press enter.
+
+Problem 9:
+    ParThread.c:
+    When make is run, the executable file created is ParThread.
+
+    ParThread is a program that performs the same operation as MyCompress, but does so by dividing the input file into n chunks and processing each chunk in a pthread.
+    It takes 3 arguments.
+        1) Input file path (file to be compressed)
+        2) Output file path (location where you want output to be stored)
+        3) Number of threads to be created
+        A sample command to run ParThread:
+            ./ParThread inputFile.txt outputFile.txt 10
+        In this case, ParThread would divide the input file into 10 chunks and create 10 threads.
+    On successful run, ParThread will print 'File "inputFile.txt" compressed succesfully to "outputFile.txt"' along with the time taken to execute the program in milliseconds.
+    ParThread does not run if the input file path is invalid or if an incorrect number of arguments are specified. It will print a brief message under these conditions.
+
+Problem 10:
+    Times with a 3.5mb file:
+        MyCompress:                 152.087 milliseconds
+        ParFork (10 processes):     927.966 milliseconds
+        ParThread (10 threads):     147.282 milliseconds
+
