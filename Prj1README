@@ -67,9 +67,9 @@ Problem 5:
         1) Input file path (file to be compressed)
         2) Output file path (location where you want output to be stored)
         3) Number of processes to be forked
-        A sample command to run ParFork:
-            ./ParFork inputFile.txt outputFile.txt 10
-        In this case, ParFork would divide the input file into 10 chunks and fork 10 processes.
+    A sample command to run ParFork:
+        ./ParFork inputFile.txt outputFile.txt 10
+    In this case, ParFork would divide the input file into 10 chunks and fork 10 processes.
     On successful run, ParFork will print 'File "inputFile.txt" compressed succesfully to "outputFile.txt"' along with the time taken to execute the program in milliseconds.
     ParFork does not run if the input file path is invalid or if an incorrect number of arguments are specified. It will print a brief message under these conditions.
 
@@ -115,9 +115,9 @@ Problem 9:
         1) Input file path (file to be compressed)
         2) Output file path (location where you want output to be stored)
         3) Number of threads to be created
-        A sample command to run ParThread:
-            ./ParThread inputFile.txt outputFile.txt 10
-        In this case, ParThread would divide the input file into 10 chunks and create 10 threads.
+    A sample command to run ParThread:
+        ./ParThread inputFile.txt outputFile.txt 10
+    In this case, ParThread would divide the input file into 10 chunks and create 10 threads.
     On successful run, ParThread will print 'File "inputFile.txt" compressed succesfully to "outputFile.txt"' along with the time taken to execute the program in milliseconds.
     ParThread does not run if the input file path is invalid or if an incorrect number of arguments are specified. It will print a brief message under these conditions.
 
