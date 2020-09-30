@@ -4,8 +4,7 @@
 #include <fcntl.h>     // for open() and close() functions
 #include <sys/time.h>  // for the gettimeofday timer/clock
 
-
-void compress(char* buf, int start, int end, char &out, int fin) {
+void compress(char* buf, int start, int end, char &out) {
 
     int counter = 1;            // set counter
     std::string newBuf = "";    // initialize string to store compressed data
@@ -68,7 +67,7 @@ int main(int argc, char* argv[]) {
     gettimeofday(&begin, 0);    // get start time
 
     // Open source.txt in read-only, 0444 gives read permission to everyone
-    int source = open(inName, O_RDONLY, 0);   
+    int source = open(inName, O_RDONLY, 0444);   
 
     // If it can't open, it sends message and exits
     if (source == -1) {
@@ -95,9 +94,9 @@ int main(int argc, char* argv[]) {
     	pids[i] = fork();
 
     	if (pids[i] == 0) {
-            start = newSize*(i);                        // set the start index to where left off
-            end = (newSize*(i+1)-1);                    // set the end index to where left off
-    	    compress(buf, start, end, *outName, size);  // call the compress function
+            start = newSize*(i);                    // set the start index to where left off
+            end = (newSize*(i+1)-1);                // set the end index to where left off
+    	    compress(buf, start, end, *outName);    // call the compress function
         }
     }
 
